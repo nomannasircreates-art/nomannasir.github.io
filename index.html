@@ -136,103 +136,7 @@
     </div>
   </section>
 
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noman Nasir | Cinematic Storytelling Video Editor • Peshawar</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', system_ui, sans-serif; }
-    .heading { font-family: 'Playfair Display', serif; }
-    
-    .hero-bg {
-      background-image: linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.88)), 
-                        url('https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=2000');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .project-card {
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .project-card:hover {
-      transform: translateY(-20px) scale(1.02);
-      box-shadow: 0 40px 70px -20px rgb(0 0 0 / 0.6);
-    }
-
-    .preview-img {
-      max-height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-top: 12px;
-      border: 1px solid #4b5563;
-    }
-  </style>
-</head>
-<body class="bg-zinc-950 text-zinc-100">
-
-  <!-- [Previous navbar, hero, work, services, reviews, about, contact, footer sections remain the same as in your last version] -->
-  <!-- ... paste them here if needed ... -->
-
-  <!-- ADMIN DASHBOARD (updated with image upload) -->
-  <div id="admin-modal" class="fixed inset-0 bg-black/95 hidden flex items-center justify-center z-[300]">
-    <div class="bg-zinc-900 w-full max-w-7xl rounded-3xl overflow-hidden max-h-[96vh] flex flex-col">
-      <div class="p-8 border-b border-zinc-800 flex justify-between bg-zinc-950">
-        <h2 class="text-3xl font-bold">Admin Dashboard — Noman Nasir</h2>
-        <button onclick="hideAdminModal()" class="text-5xl text-zinc-400 hover:text-white">×</button>
-      </div>
-      <div class="flex flex-1 overflow-hidden">
-        <div class="w-80 bg-zinc-950 p-8 space-y-3 border-r border-zinc-800">
-          <div onclick="switchTab(0)" class="admin-tab p-5 rounded-3xl cursor-pointer hover:bg-zinc-900 flex items-center gap-4 text-lg font-medium" data-tab="0"><i class="fas fa-film"></i> Projects</div>
-          <!-- other tabs ... -->
-        </div>
-        <div id="admin-content" class="flex-1 p-10 overflow-auto"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Your existing data object (expanded a bit)
-    let data = {
-      // ... your existing hero, aboutText, services, reviews ...
-      projects: [
-        {id:1, title:"The Last Harvest", category:"Documentary", desc:"Emotional documentary...", thumbnail:"https://img.youtube.com/vi/kt0X0bxHbk0/maxresdefault.jpg", thumbnailBase64:"", embed:"https://www.youtube.com/embed/kt0X0bxHbk0", client:"Independent"},
-        // ... more projects ...
-      ]
-      // ... rest of data ...
-    };
-
-    // Load saved data (including base64 thumbnails)
-    if (localStorage.getItem('nomanData')) {
-      data = JSON.parse(localStorage.getItem('nomanData'));
-    }
-
-    function saveData() {
-      localStorage.setItem('nomanData', JSON.stringify(data));
-    }
-
-    // Render portfolio (now prefers base64 if available)
-    function renderPortfolio() {
-      const grid = document.getElementById('portfolio-grid');
-      if (!grid) return;
-      grid.innerHTML = data.projects.map(p => `
-        <div onclick="showProject(${p.id})" class="project-card bg-zinc-900 rounded-3xl overflow-hidden cursor-pointer">
-          <img src="${p.thumbnailBase64 || p.thumbnail}" class="w-full aspect-video object-cover">
-          <div class="p-8">
-            <span class="text-amber-500 text-xs uppercase tracking-widest">${p.category}</span>
-            <h3 class="text-2xl font-bold mt-3">${p.title}</h3>
-            <p class="text-zinc-400 mt-4 line-clamp-3">${p.desc}</p>
-            ${p.client ? `<p class="text-sm text-zinc-500 mt-6">Client: ${p.client}</p>` : ''}
-          </div>
-        </div>
-      `).join('');
-    }
-
+  
     // ==================== ADMIN - PROJECTS TAB (with upload) ====================
     function renderAdminProjects() {
       let html = `<h2 class="text-4xl font-bold mb-10">Manage Projects</h2>`;
@@ -342,19 +246,12 @@
         saveData();
         renderPortfolio();
         renderAdminProjects();
-      }
-    }
 
     // Call this when switching to Projects tab
     // (add to your existing switchTab / switchAdminTab function)
     if (currentTab === 'projects') {
       renderAdminProjects();
-    }
-
-    // ... rest of your script (renderAll, showAdminModal, etc.) ...
-  </script>
-</body>
-</html>
+    
   <!-- SERVICES -->
   <section id="services" class="py-28">
     <div class="max-w-screen-2xl mx-auto px-8">
