@@ -136,21 +136,225 @@
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="work" class="py-28 bg-zinc-900">
-    <div class="max-w-screen-2xl mx-auto px-8">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-        <div>
-          <span class="uppercase text-amber-500 tracking-[4px] text-sm font-medium">Featured Work</span>
-          <h2 class="text-6xl heading font-bold tracking-tighter">Selected Projects</h2>
-        </div>
-        <div id="category-filters" class="flex flex-wrap gap-3 mt-8 md:mt-0"></div>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noman Nasir | Cinematic Storytelling Video Editor • Peshawar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system_ui, sans-serif; }
+    .heading { font-family: 'Playfair Display', serif; }
+    
+    .hero-bg {
+      background-image: linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.88)), 
+                        url('https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=2000');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .project-card {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .project-card:hover {
+      transform: translateY(-20px) scale(1.02);
+      box-shadow: 0 40px 70px -20px rgb(0 0 0 / 0.6);
+    }
+
+    .preview-img {
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 12px;
+      border: 1px solid #4b5563;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100">
+
+  <!-- [Previous navbar, hero, work, services, reviews, about, contact, footer sections remain the same as in your last version] -->
+  <!-- ... paste them here if needed ... -->
+
+  <!-- ADMIN DASHBOARD (updated with image upload) -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/95 hidden flex items-center justify-center z-[300]">
+    <div class="bg-zinc-900 w-full max-w-7xl rounded-3xl overflow-hidden max-h-[96vh] flex flex-col">
+      <div class="p-8 border-b border-zinc-800 flex justify-between bg-zinc-950">
+        <h2 class="text-3xl font-bold">Admin Dashboard — Noman Nasir</h2>
+        <button onclick="hideAdminModal()" class="text-5xl text-zinc-400 hover:text-white">×</button>
       </div>
-
-      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+      <div class="flex flex-1 overflow-hidden">
+        <div class="w-80 bg-zinc-950 p-8 space-y-3 border-r border-zinc-800">
+          <div onclick="switchTab(0)" class="admin-tab p-5 rounded-3xl cursor-pointer hover:bg-zinc-900 flex items-center gap-4 text-lg font-medium" data-tab="0"><i class="fas fa-film"></i> Projects</div>
+          <!-- other tabs ... -->
+        </div>
+        <div id="admin-content" class="flex-1 p-10 overflow-auto"></div>
+      </div>
     </div>
-  </section>
+  </div>
 
+  <script>
+    // Your existing data object (expanded a bit)
+    let data = {
+      // ... your existing hero, aboutText, services, reviews ...
+      projects: [
+        {id:1, title:"The Last Harvest", category:"Documentary", desc:"Emotional documentary...", thumbnail:"https://img.youtube.com/vi/kt0X0bxHbk0/maxresdefault.jpg", thumbnailBase64:"", embed:"https://www.youtube.com/embed/kt0X0bxHbk0", client:"Independent"},
+        // ... more projects ...
+      ]
+      // ... rest of data ...
+    };
+
+    // Load saved data (including base64 thumbnails)
+    if (localStorage.getItem('nomanData')) {
+      data = JSON.parse(localStorage.getItem('nomanData'));
+    }
+
+    function saveData() {
+      localStorage.setItem('nomanData', JSON.stringify(data));
+    }
+
+    // Render portfolio (now prefers base64 if available)
+    function renderPortfolio() {
+      const grid = document.getElementById('portfolio-grid');
+      if (!grid) return;
+      grid.innerHTML = data.projects.map(p => `
+        <div onclick="showProject(${p.id})" class="project-card bg-zinc-900 rounded-3xl overflow-hidden cursor-pointer">
+          <img src="${p.thumbnailBase64 || p.thumbnail}" class="w-full aspect-video object-cover">
+          <div class="p-8">
+            <span class="text-amber-500 text-xs uppercase tracking-widest">${p.category}</span>
+            <h3 class="text-2xl font-bold mt-3">${p.title}</h3>
+            <p class="text-zinc-400 mt-4 line-clamp-3">${p.desc}</p>
+            ${p.client ? `<p class="text-sm text-zinc-500 mt-6">Client: ${p.client}</p>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== ADMIN - PROJECTS TAB (with upload) ====================
+    function renderAdminProjects() {
+      let html = `<h2 class="text-4xl font-bold mb-10">Manage Projects</h2>`;
+
+      data.projects.forEach((p, i) => {
+        html += `
+          <div class="bg-zinc-800 p-8 rounded-3xl mb-10 border border-zinc-700">
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <label class="block text-sm text-zinc-400 mb-2">Thumbnail Preview</label>
+                <img id="preview-${i}" src="${p.thumbnailBase64 || p.thumbnail}" class="preview-img w-full">
+                <input type="file" accept="image/*" id="file-${i}" class="mt-4 block w-full text-sm text-zinc-400 file:mr-4 file:py-3 file:px-5 file:rounded-2xl file:border-0 file:text-sm file:bg-amber-600 file:text-white hover:file:bg-amber-500">
+              </div>
+              <div class="space-y-6">
+                <input value="${p.title}" id="title-${i}" class="w-full bg-zinc-900 border border-zinc-700 px-6 py-5 rounded-2xl text-lg" placeholder="Project Title">
+                <input value="${p.category}" id="cat-${i}" class="w-full bg-zinc-900 border border-zinc-700 px-6 py-5 rounded-2xl" placeholder="Category">
+                <input value="${p.client || ''}" id="client-${i}" class="w-full bg-zinc-900 border border-zinc-700 px-6 py-5 rounded-2xl" placeholder="Client (optional)">
+                <textarea id="desc-${i}" class="w-full h-32 bg-zinc-900 border border-zinc-700 px-6 py-5 rounded-2xl">${p.desc}</textarea>
+                <input value="${p.embed || ''}" id="embed-${i}" class="w-full bg-zinc-900 border border-zinc-700 px-6 py-5 rounded-2xl" placeholder="YouTube embed URL">
+              </div>
+            </div>
+
+            <div class="mt-8 flex gap-4">
+              <button onclick="saveProject(${i})" class="flex-1 py-5 bg-amber-600 hover:bg-amber-500 text-zinc-950 font-semibold rounded-2xl">Save Project</button>
+              <button onclick="deleteProject(${i})" class="flex-1 py-5 bg-red-900/50 hover:bg-red-900 text-red-300 rounded-2xl">Delete</button>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `<button onclick="addProject()" class="w-full py-8 border-2 border-dashed border-amber-600 hover:border-amber-400 text-amber-400 rounded-3xl text-xl font-medium mt-6">+ Add New Project</button>`;
+
+      document.getElementById('admin-content').innerHTML = html;
+
+      // Attach file listeners after render
+      data.projects.forEach((_, i) => {
+        const fileInput = document.getElementById(`file-${i}`);
+        if (fileInput) {
+          fileInput.addEventListener('change', (e) => handleImageUpload(e, i));
+        }
+      });
+    }
+
+    // Handle image upload → convert to base64 + preview
+    function handleImageUpload(event, index) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        // Optional: warn if too big
+        if (base64.length > 2 * 1024 * 1024) { // ~2MB
+          if (!confirm('Image is quite large (>2MB). This may slow down the page. Continue?')) {
+            event.target.value = '';
+            return;
+          }
+        }
+
+        data.projects[index].thumbnailBase64 = base64;
+        document.getElementById(`preview-${index}`).src = base64;
+        saveData();
+        alert('Image uploaded & saved! (stored as base64 in browser)');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProject(i) {
+      data.projects[i] = {
+        ...data.projects[i],
+        title: document.getElementById(`title-${i}`).value,
+        category: document.getElementById(`cat-${i}`).value,
+        desc: document.getElementById(`desc-${i}`).value,
+        client: document.getElementById(`client-${i}`).value,
+        embed: document.getElementById(`embed-${i}`).value,
+        // thumbnailBase64 already updated on upload
+      };
+      saveData();
+      renderPortfolio();
+      alert('Project saved!');
+    }
+
+    function addProject() {
+      data.projects.push({
+        id: Date.now(),
+        title: "New Project",
+        category: "Documentary",
+        desc: "Description here...",
+        thumbnail: "https://via.placeholder.com/800x450?text=Thumbnail",
+        thumbnailBase64: "",
+        embed: "",
+        client: ""
+      });
+      saveData();
+      renderPortfolio();
+      renderAdminProjects(); // refresh admin view
+    }
+
+    function deleteProject(i) {
+      if (confirm("Delete project?")) {
+        data.projects.splice(i, 1);
+        saveData();
+        renderPortfolio();
+        renderAdminProjects();
+      }
+    }
+
+    // Call this when switching to Projects tab
+    // (add to your existing switchTab / switchAdminTab function)
+    if (currentTab === 'projects') {
+      renderAdminProjects();
+    }
+
+    // ... rest of your script (renderAll, showAdminModal, etc.) ...
+  </script>
+</body>
+</html>
   <!-- SERVICES -->
   <section id="services" class="py-28">
     <div class="max-w-screen-2xl mx-auto px-8">
