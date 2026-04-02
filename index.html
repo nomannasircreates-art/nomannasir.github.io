@@ -127,7 +127,7 @@
       text-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
     }
 
-    /* Custom Cursor */
+    /* Custom Cursor - Hidden on mobile */
     .custom-cursor {
       width: 20px;
       height: 20px;
@@ -146,6 +146,15 @@
       height: 60px;
       border-color: rgba(255, 255, 255, 0.8);
       background: rgba(245, 158, 11, 0.1);
+    }
+
+    @media (pointer: coarse) {
+      .custom-cursor {
+        display: none !important;
+      }
+      body {
+        cursor: auto !important;
+      }
     }
 
     /* Loading Screen */
@@ -262,6 +271,49 @@
       width: 0%;
       transition: width 0.1s linear;
     }
+
+    /* Mobile Menu Fixes */
+    #mobile-menu {
+      z-index: 60;
+    }
+
+    #mobile-menu a {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    /* Image loading placeholder */
+    .img-loading {
+      background: linear-gradient(110deg, #1a1a1a 8%, #2a2a2a 18%, #1a1a1a 33%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position-x: -200%;
+      }
+    }
+
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Focus visible for accessibility */
+    *:focus-visible {
+      outline: 2px solid #f59e0b;
+      outline-offset: 2px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 overflow-x-hidden cursor-none">
@@ -307,21 +359,21 @@
         </button>
         
         <!-- Mobile Menu Button -->
-        <button class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" onclick="toggleMobileMenu()">
-          <span class="w-6 h-0.5 bg-white transition-all" id="menu-line-1"></span>
-          <span class="w-6 h-0.5 bg-white transition-all" id="menu-line-2"></span>
+        <button class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 relative z-[70]" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+          <span class="w-6 h-0.5 bg-white transition-all duration-300" id="menu-line-1"></span>
+          <span class="w-6 h-0.5 bg-white transition-all duration-300" id="menu-line-2"></span>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div class="lg:hidden fixed inset-0 bg-zinc-950/98 backdrop-blur-xl z-40 translate-x-full transition-transform duration-500" id="mobile-menu">
+    <!-- Mobile Menu - Fixed z-index and structure -->
+    <div class="lg:hidden fixed inset-0 bg-zinc-950/98 backdrop-blur-xl z-[60] translate-x-full transition-transform duration-500 ease-out" id="mobile-menu">
       <div class="flex flex-col items-center justify-center h-full gap-8 text-2xl font-display">
-        <a href="#work" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">WORK</a>
-        <a href="#services" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">SERVICES</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">ABOUT</a>
-        <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">REVIEWS</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">CONTACT</a>
+        <a href="#work" onclick="handleMobileNavClick(event, 'work')" class="hover:text-amber-500 transition-colors py-4 px-8">WORK</a>
+        <a href="#services" onclick="handleMobileNavClick(event, 'services')" class="hover:text-amber-500 transition-colors py-4 px-8">SERVICES</a>
+        <a href="#about" onclick="handleMobileNavClick(event, 'about')" class="hover:text-amber-500 transition-colors py-4 px-8">ABOUT</a>
+        <a href="#reviews" onclick="handleMobileNavClick(event, 'reviews')" class="hover:text-amber-500 transition-colors py-4 px-8">REVIEWS</a>
+        <a href="#contact" onclick="handleMobileNavClick(event, 'contact')" class="hover:text-amber-500 transition-colors py-4 px-8">CONTACT</a>
       </div>
     </div>
   </nav>
@@ -371,16 +423,16 @@
       <!-- Stats -->
       <div class="mt-20 grid grid-cols-3 gap-8 max-w-2xl mx-auto reveal">
         <div class="text-center">
-          <div class="text-3xl md:text-4xl font-bold text-white font-display">150+</div>
+          <div class="text-3xl md:text-4xl font-bold text-white font-display counter" data-target="60">0</div>
           <div class="text-xs text-zinc-500 mt-2 tracking-widest uppercase">Projects</div>
         </div>
         <div class="text-center border-x border-zinc-800">
-          <div class="text-3xl md:text-4xl font-bold text-amber-500 font-display">92%</div>
-          <div class="text-xs text-zinc-500 mt-2 tracking-widest uppercase">Retention</div>
+          <div class="text-3xl md:text-4xl font-bold text-amber-500 font-display counter" data-target="95">0</div>
+          <div class="text-xs text-zinc-500 mt-2 tracking-widest uppercase">Retention %</div>
         </div>
         <div class="text-center">
-          <div class="text-3xl md:text-4xl font-bold text-white font-display">50M+</div>
-          <div class="text-xs text-zinc-500 mt-2 tracking-widest uppercase">Views</div>
+          <div class="text-3xl md:text-4xl font-bold text-white font-display counter" data-target="25">0</div>
+          <div class="text-xs text-zinc-500 mt-2 tracking-widest uppercase">Million Views</div>
         </div>
       </div>
     </div>
@@ -451,33 +503,33 @@
         <div class="grid md:grid-cols-4 gap-8 relative">
           <div class="absolute top-8 left-0 right-0 h-px bg-zinc-800 hidden md:block"></div>
           
-          <div class="relative text-center">
-            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 hover:border-amber-500 transition-colors">
-              <span class="text-amber-500 font-bold">01</span>
+          <div class="relative text-center group">
+            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 group-hover:border-amber-500 group-hover:bg-amber-500/10 transition-all duration-300">
+              <span class="text-amber-500 font-bold group-hover:scale-110 transition-transform">01</span>
             </div>
             <h4 class="font-semibold mb-2">Discovery</h4>
             <p class="text-sm text-zinc-500">Deep dive into your vision, audience, and goals</p>
           </div>
           
-          <div class="relative text-center">
-            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 hover:border-amber-500 transition-colors">
-              <span class="text-amber-500 font-bold">02</span>
+          <div class="relative text-center group">
+            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 group-hover:border-amber-500 group-hover:bg-amber-500/10 transition-all duration-300">
+              <span class="text-amber-500 font-bold group-hover:scale-110 transition-transform">02</span>
             </div>
             <h4 class="font-semibold mb-2">Assembly</h4>
             <p class="text-sm text-zinc-500">Rough cut structure and narrative flow</p>
           </div>
           
-          <div class="relative text-center">
-            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 hover:border-amber-500 transition-colors">
-              <span class="text-amber-500 font-bold">03</span>
+          <div class="relative text-center group">
+            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 group-hover:border-amber-500 group-hover:bg-amber-500/10 transition-all duration-300">
+              <span class="text-amber-500 font-bold group-hover:scale-110 transition-transform">03</span>
             </div>
             <h4 class="font-semibold mb-2">Refinement</h4>
             <p class="text-sm text-zinc-500">Pacing, color, sound design, and graphics</p>
           </div>
           
-          <div class="relative text-center">
-            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 hover:border-amber-500 transition-colors">
-              <span class="text-amber-500 font-bold">04</span>
+          <div class="relative text-center group">
+            <div class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-6 relative z-10 group-hover:border-amber-500 group-hover:bg-amber-500/10 transition-all duration-300">
+              <span class="text-amber-500 font-bold group-hover:scale-110 transition-transform">04</span>
             </div>
             <h4 class="font-semibold mb-2">Delivery</h4>
             <p class="text-sm text-zinc-500">Optimized formats and platform specs</p>
@@ -492,12 +544,12 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="grid lg:grid-cols-12 gap-16 items-center">
         <div class="lg:col-span-5 relative reveal">
-          <div class="relative aspect-[4/5] rounded-3xl overflow-hidden">
-            <img id="about-image" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800" alt="Noman Nasir" class="object-cover w-full h-full hover:scale-105 transition-transform duration-700">
+          <div class="relative aspect-[4/5] rounded-3xl overflow-hidden bg-zinc-900">
+            <img id="about-image" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Noman Nasir" class="object-cover w-full h-full hover:scale-105 transition-transform duration-700" loading="lazy" onerror="this.src='https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=800'">
             <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent"></div>
           </div>
           <!-- Floating Card -->
-          <div class="absolute -bottom-6 -right-6 bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-2xl max-w-xs hidden md:block">
+          <div class="absolute -bottom-6 -right-6 bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-2xl max-w-xs hidden md:block hover:border-amber-500/50 transition-colors duration-300">
             <div class="flex items-center gap-4 mb-3">
               <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
                 <i class="fas fa-award text-amber-500"></i>
@@ -527,19 +579,19 @@
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="border-l-2 border-amber-500 pl-4">
-              <div class="text-3xl font-bold font-display text-white">8+</div>
+              <div class="text-3xl font-bold font-display text-white counter" data-target="8">0</div>
               <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Years Experience</div>
             </div>
             <div class="border-l-2 border-zinc-700 pl-4">
-              <div class="text-3xl font-bold font-display text-white">150+</div>
+              <div class="text-3xl font-bold font-display text-white counter" data-target="60">0</div>
               <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Projects</div>
             </div>
             <div class="border-l-2 border-zinc-700 pl-4">
-              <div class="text-3xl font-bold font-display text-white">50+</div>
+              <div class="text-3xl font-bold font-display text-white counter" data-target="50">0</div>
               <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Clients</div>
             </div>
             <div class="border-l-2 border-zinc-700 pl-4">
-              <div class="text-3xl font-bold font-display text-white">12</div>
+              <div class="text-3xl font-bold font-display text-white counter" data-target="12">0</div>
               <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Awards</div>
             </div>
           </div>
@@ -551,7 +603,7 @@
               <span class="text-amber-500">95%</span>
             </div>
             <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-              <div class="h-full bg-amber-500 w-[95%] rounded-full"></div>
+              <div class="h-full bg-amber-500 w-[95%] rounded-full skill-bar"></div>
             </div>
             
             <div class="flex justify-between text-sm mb-1">
@@ -559,7 +611,7 @@
               <span class="text-amber-500">90%</span>
             </div>
             <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-              <div class="h-full bg-amber-500 w-[90%] rounded-full"></div>
+              <div class="h-full bg-amber-500 w-[90%] rounded-full skill-bar"></div>
             </div>
             
             <div class="flex justify-between text-sm mb-1">
@@ -567,7 +619,7 @@
               <span class="text-amber-500">85%</span>
             </div>
             <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-              <div class="h-full bg-amber-500 w-[85%] rounded-full"></div>
+              <div class="h-full bg-amber-500 w-[85%] rounded-full skill-bar"></div>
             </div>
           </div>
         </div>
@@ -606,7 +658,7 @@
           <p class="text-xl text-zinc-400 mb-12">Have a project in mind? Let's discuss how we can bring your vision to life with cinematic precision.</p>
           
           <div class="space-y-6">
-            <a href="mailto:hello@nomannasir.com" class="group flex items-center gap-6 p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-amber-500/50 transition-all duration-300 magnetic-btn" data-magnetic>
+            <a href="mailto:nomannasircreates@gmail.com" class="group flex items-center gap-6 p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-amber-500/50 transition-all duration-300 magnetic-btn" data-magnetic>
               <div class="w-14 h-14 rounded-2xl bg-zinc-800 flex items-center justify-center text-2xl group-hover:bg-amber-500 group-hover:text-zinc-950 transition-all duration-300">
                 <i class="fas fa-envelope"></i>
               </div>
@@ -616,7 +668,7 @@
               </div>
             </a>
 
-            <a href="https://wa.me/923001234567" target="_blank" class="group flex items-center gap-6 p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-green-500/50 transition-all duration-300 magnetic-btn" data-magnetic>
+            <a href="https://wa.me/923278330045" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-6 p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-green-500/50 transition-all duration-300 magnetic-btn" data-magnetic>
               <div class="w-14 h-14 rounded-2xl bg-zinc-800 flex items-center justify-center text-2xl group-hover:bg-green-500 group-hover:text-zinc-950 transition-all duration-300">
                 <i class="fab fa-whatsapp"></i>
               </div>
@@ -627,16 +679,16 @@
             </a>
 
             <div class="flex gap-4 mt-8">
-              <a href="#" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic>
+              <a href="https://youtube.com/@nomannasir" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic aria-label="YouTube">
                 <i class="fab fa-youtube"></i>
               </a>
-              <a href="#" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic>
+              <a href="https://instagram.com/nomannasir" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
               </a>
-              <a href="#" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic>
+              <a href="https://linkedin.com/in/nomannasir" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
               </a>
-              <a href="#" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic>
+              <a href="https://behance.net/nomannasir" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300 magnetic-btn" data-magnetic aria-label="Behance">
                 <i class="fab fa-behance"></i>
               </a>
             </div>
@@ -644,20 +696,20 @@
         </div>
 
         <div class="reveal">
-          <form action="https://formspree.io/f/YOUR_ID" method="POST" class="space-y-6 bg-zinc-900/30 p-8 rounded-3xl border border-zinc-800">
+          <form action="https://formspree.io/f/xnqevjdr" method="POST" class="space-y-6 bg-zinc-900/30 p-8 rounded-3xl border border-zinc-800" id="contact-form">
             <div class="grid md:grid-cols-2 gap-6">
               <div class="relative">
-                <input type="text" name="name" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent">
+                <input type="text" name="name" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent text-white">
                 <label class="absolute left-6 -top-2.5 bg-zinc-900 px-2 text-xs text-zinc-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-amber-500">Your Name</label>
               </div>
               <div class="relative">
-                <input type="email" name="email" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent">
+                <input type="email" name="email" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent text-white">
                 <label class="absolute left-6 -top-2.5 bg-zinc-900 px-2 text-xs text-zinc-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-amber-500">Your Email</label>
               </div>
             </div>
             
             <div class="relative">
-              <select name="project_type" class="w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 text-zinc-300">
+              <select name="project_type" class="w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 text-zinc-300 cursor-pointer">
                 <option value="">Select Project Type</option>
                 <option value="documentary">Documentary</option>
                 <option value="youtube">YouTube Content</option>
@@ -668,12 +720,16 @@
             </div>
 
             <div class="relative">
-              <textarea name="message" rows="5" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent resize-none"></textarea>
+              <textarea name="message" rows="5" required class="peer w-full bg-zinc-800/50 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-xl outline-none transition-all duration-300 placeholder-transparent resize-none text-white"></textarea>
               <label class="absolute left-6 -top-2.5 bg-zinc-900 px-2 text-xs text-zinc-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-amber-500">Tell me about your project</label>
             </div>
 
-            <button type="submit" class="w-full py-5 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold text-lg rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] magnetic-btn" data-magnetic>
-              SEND MESSAGE <i class="fas fa-arrow-right ml-2"></i>
+            <input type="text" name="_gotcha" style="display:none" />
+
+            <button type="submit" class="w-full py-5 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold text-lg rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] magnetic-btn relative overflow-hidden" data-magnetic id="submit-btn">
+              <span class="relative z-10 flex items-center justify-center gap-2">
+                SEND MESSAGE <i class="fas fa-arrow-right ml-2"></i>
+              </span>
             </button>
           </form>
         </div>
@@ -694,7 +750,7 @@
         </div>
         
         <div class="text-zinc-500 text-sm text-center md:text-right">
-          <p>&copy; 2026 Noman Nasir. All rights reserved.</p>
+          <p>&copy; <span id="year">2026</span> Noman Nasir. All rights reserved.</p>
           <p class="mt-1">Crafted with precision in Peshawar, Pakistan</p>
         </div>
       </div>
@@ -704,17 +760,17 @@
   <!-- Modals -->
   <!-- Showreel Modal -->
   <div id="showreel-modal" class="fixed inset-0 bg-black/98 hidden items-center justify-center z-[200] p-4 backdrop-blur-xl opacity-0 transition-opacity duration-300">
-    <button onclick="hideShowreelModal()" class="absolute top-8 right-8 w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-2xl hover:bg-zinc-700 transition-colors z-10">
+    <button onclick="hideShowreelModal()" class="absolute top-8 right-8 w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-2xl hover:bg-zinc-700 transition-colors z-10" aria-label="Close">
       <i class="fas fa-times"></i>
     </button>
     <div class="w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 relative">
-      <iframe id="showreel-iframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute inset-0"></iframe>
+      <iframe id="showreel-iframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="absolute inset-0"></iframe>
     </div>
   </div>
 
   <!-- Project Modal -->
   <div id="project-modal" class="fixed inset-0 bg-black/98 hidden items-center justify-center z-[200] p-4 backdrop-blur-xl opacity-0 transition-opacity duration-300 overflow-y-auto">
-    <button onclick="hideProjectModal()" class="fixed top-8 right-8 w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-2xl hover:bg-zinc-700 transition-colors z-50">
+    <button onclick="hideProjectModal()" class="fixed top-8 right-8 w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-2xl hover:bg-zinc-700 transition-colors z-50" aria-label="Close">
       <i class="fas fa-times"></i>
     </button>
     <div id="modal-content" class="w-full max-w-5xl bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl my-8 transform scale-95 transition-transform duration-300">
@@ -725,17 +781,24 @@
   <!-- Review Submit Modal -->
   <div id="review-submit-modal" class="fixed inset-0 bg-black/98 hidden items-center justify-center z-[200] p-4 backdrop-blur-xl opacity-0 transition-opacity duration-300">
     <div class="bg-zinc-900 w-full max-w-lg rounded-3xl p-8 border border-zinc-800 transform scale-95 transition-transform duration-300" id="review-modal-content">
-      <h3 class="text-2xl font-display font-bold mb-2">Share Your Experience</h3>
-      <p class="text-zinc-400 text-sm mb-8">Your feedback helps others discover quality editing services.</p>
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h3 class="text-2xl font-display font-bold">Share Your Experience</h3>
+          <p class="text-zinc-400 text-sm mt-1">Your feedback helps others discover quality editing services.</p>
+        </div>
+        <button onclick="hideReviewSubmitModal()" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
       
       <form id="review-form" onsubmit="submitReview(event)" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
-          <input id="review-name" type="text" placeholder="Your Name" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors">
-          <input id="review-role" type="text" placeholder="Your Role (e.g., YouTuber)" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors">
+          <input id="review-name" type="text" placeholder="Your Name" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors text-white">
+          <input id="review-role" type="text" placeholder="Your Role (e.g., YouTuber)" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors text-white">
         </div>
-        <input id="review-email" type="email" placeholder="your@email.com" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors">
+        <input id="review-email" type="email" placeholder="your@email.com" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors text-white">
         
-        <div class="flex gap-2 justify-center py-2">
+        <div class="flex gap-2 justify-center py-2" id="star-container">
           <button type="button" class="star-btn text-2xl text-zinc-600 hover:text-amber-500 transition-colors" data-rating="1">★</button>
           <button type="button" class="star-btn text-2xl text-zinc-600 hover:text-amber-500 transition-colors" data-rating="2">★</button>
           <button type="button" class="star-btn text-2xl text-zinc-600 hover:text-amber-500 transition-colors" data-rating="3">★</button>
@@ -744,7 +807,7 @@
         </div>
         <input type="hidden" id="review-rating" value="5">
         
-        <textarea id="review-text" rows="4" placeholder="How was your experience working with me?" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors resize-none"></textarea>
+        <textarea id="review-text" rows="4" placeholder="How was your experience working with me?" required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-5 py-3 rounded-xl outline-none transition-colors resize-none text-white"></textarea>
         
         <button type="submit" class="w-full py-4 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold rounded-xl transition-all duration-300 hover:scale-[1.02]">
           Submit Review
@@ -762,14 +825,14 @@
           <i class="fas fa-crown text-amber-500 text-2xl"></i>
           <span class="text-2xl font-display font-bold">Admin Dashboard</span>
         </div>
-        <button onclick="hideAdminModal()" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+        <button onclick="hideAdminModal()" class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors" aria-label="Close">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
       <div class="flex flex-1 overflow-hidden">
         <!-- Sidebar -->
-        <div class="w-64 bg-zinc-950/50 border-r border-zinc-800 p-6 space-y-2">
+        <div class="w-64 bg-zinc-950/50 border-r border-zinc-800 p-6 space-y-2 hidden md:block">
           <button onclick="switchAdminTab(0)" class="admin-tab w-full text-left px-5 py-4 rounded-xl transition-all duration-300 flex items-center gap-3 hover:bg-zinc-800" data-tab="0">
             <i class="fas fa-film text-zinc-400"></i> Projects
           </button>
@@ -780,6 +843,9 @@
             <i class="fas fa-star text-zinc-400"></i> Reviews
           </button>
           <button onclick="switchAdminTab(3)" class="admin-tab w-full text-left px-5 py-4 rounded-xl transition-all duration-300 flex items-center gap-3 hover:bg-zinc-800" data-tab="3">
+            <i class="fas fa-user text-zinc-400"></i> About
+          </button>
+          <button onclick="switchAdminTab(4)" class="admin-tab w-full text-left px-5 py-4 rounded-xl transition-all duration-300 flex items-center gap-3 hover:bg-zinc-800" data-tab="4">
             <i class="fas fa-cog text-zinc-400"></i> Settings
           </button>
           <div class="pt-6 mt-6 border-t border-zinc-800">
@@ -792,6 +858,15 @@
           </div>
         </div>
 
+        <!-- Mobile Admin Nav -->
+        <div class="md:hidden w-full bg-zinc-950/50 border-b border-zinc-800 p-4 flex gap-2 overflow-x-auto">
+          <button onclick="switchAdminTab(0)" class="admin-tab-mobile px-4 py-2 rounded-lg text-sm whitespace-nowrap bg-zinc-800 text-amber-500" data-tab="0">Projects</button>
+          <button onclick="switchAdminTab(1)" class="admin-tab-mobile px-4 py-2 rounded-lg text-sm whitespace-nowrap text-zinc-400" data-tab="1">Services</button>
+          <button onclick="switchAdminTab(2)" class="admin-tab-mobile px-4 py-2 rounded-lg text-sm whitespace-nowrap text-zinc-400" data-tab="2">Reviews</button>
+          <button onclick="switchAdminTab(3)" class="admin-tab-mobile px-4 py-2 rounded-lg text-sm whitespace-nowrap text-zinc-400" data-tab="3">About</button>
+          <button onclick="switchAdminTab(4)" class="admin-tab-mobile px-4 py-2 rounded-lg text-sm whitespace-nowrap text-zinc-400" data-tab="4">Settings</button>
+        </div>
+
         <!-- Content -->
         <div id="admin-content" class="flex-1 p-8 overflow-auto bg-zinc-900/30">
           <!-- Admin content injected by JS -->
@@ -801,12 +876,50 @@
   </div>
 
   <script>
+    // ==================== CONFIGURATION ====================
+    // Easy configuration object - Edit these values to customize your site
+    const CONFIG = {
+      // Contact Info - UPDATE THESE
+      whatsappNumber: '923278330045', // Format: country code + number without +
+      email: 'nomannasircreates@gmail.com',
+      socialLinks: {
+        youtube: 'https://youtube.com/@nomannasir',
+        instagram: 'https://instagram.com/nomannasir',
+        linkedin: 'https://linkedin.com/in/nomannasir',
+        behance: 'https://behance.net/nomannasir'
+      },
+      
+      // Stats - UPDATE THESE
+      stats: {
+        projects: 60,
+        retention: 95,
+        views: 25, // in millions
+        years: 8,
+        clients: 50,
+        awards: 12
+      },
+      
+      // Pricing - UPDATE THESE (already reduced as requested)
+      pricing: {
+        documentary: { min: 800, max: 2500, unit: 'project' },
+        youtube: { min: 200, max: 800, unit: 'video' },
+        color: { min: 150, max: 500, unit: 'project' },
+        motion: { min: 200, max: 600, unit: 'project' }
+      },
+      
+      // Showreel Video ID - UPDATE THIS with your actual YouTube video ID
+      showreelVideoId: 'iaOXMQJntok', // Just the ID, not full URL
+      
+      // Formspree Form ID - UPDATE THIS
+      formspreeId: 'xnqevjdr'
+    };
+
     // ==================== DATA ====================
     let siteData = {
       heroHeadline: "CINEMATIC STORYTELLING",
       heroSubheadline: "Documentary-style editing that transforms raw footage into emotionally compelling narratives. Retention-optimized for creators who demand excellence.",
       heroBg: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      aboutImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800",
+      aboutImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
       aboutText: `<p class="mb-6">I believe every frame has a purpose. Every cut should serve the story. With over 8 years of experience in documentary filmmaking and digital content creation, I've developed a keen eye for the moments that matter.</p>
                   <p>My approach combines traditional cinematic techniques with modern retention strategies. Whether it's a 30-second TikTok or a 45-minute documentary, the goal remains the same: <strong class="text-white">create an emotional connection that keeps viewers watching.</strong></p>`,
       projects: [
@@ -816,7 +929,7 @@
           category: "Documentary",
           desc: "An intimate portrait of generational farming in rural Pakistan. 28-minute documentary featuring masterful pacing and emotional B-roll that maintains 94% retention.",
           thumbnail: "https://img.youtube.com/vi/kt0X0bxHbk0/maxresdefault.jpg",
-          videoEmbed: "https://www.youtube.com/embed/kt0X0bxHbk0",
+          videoId: "kt0X0bxHbk0", // Just the video ID
           client: "National Geographic Digital",
           year: "2025",
           duration: "28:00"
@@ -827,7 +940,7 @@
           category: "Educational",
           desc: "Comprehensive YouTube masterclass series. Strategic hook placement every 8-12 seconds resulted in 41% increase in average view duration.",
           thumbnail: "https://img.youtube.com/vi/o8B5sZRoOSo/maxresdefault.jpg",
-          videoEmbed: "https://www.youtube.com/embed/o8B5sZRoOSo",
+          videoId: "o8B5sZRoOSo",
           client: "Creator Academy",
           year: "2026",
           duration: "45:00"
@@ -837,8 +950,8 @@
           title: "Urban Rhythms",
           category: "Commercial",
           desc: "High-energy brand film for streetwear label. Fast-paced editing with dynamic transitions and custom sound design.",
-          thumbnail: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800",
-          videoEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          thumbnail: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80",
+          videoId: "dQw4w9WgXcQ",
           client: "Liminal Studios",
           year: "2025",
           duration: "2:30"
@@ -848,8 +961,8 @@
           title: "Beyond the Summit",
           category: "Documentary",
           desc: "Following the first Pakistani female mountaineer to climb K2. Raw, emotional storytelling with minimalistic approach.",
-          thumbnail: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800",
-          videoEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          thumbnail: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+          videoId: "dQw4w9WgXcQ",
           client: "Independent",
           year: "2025",
           duration: "35:00"
@@ -860,25 +973,25 @@
           title: "Documentary Editing", 
           desc: "Full narrative development, interview sequencing, archival integration, and emotional pacing for long-form content.",
           icon: "fa-film",
-          price: "From $2,500"
+          price: "From $800"
         },
         { 
           title: "YouTube Optimization", 
           desc: "Retention-focused editing with strategic hooks, pattern interrupts, and end-screen optimization for maximum watch time.",
           icon: "fa-youtube",
-          price: "From $800"
+          price: "From $200"
         },
         { 
           title: "Color Grading", 
           desc: "Cinematic color correction and grading. Film emulation, mood establishment, and skin tone perfection using DaVinci Resolve.",
           icon: "fa-palette",
-          price: "From $500"
+          price: "From $150"
         },
         { 
           title: "Motion Graphics", 
           desc: "Kinetic typography, lower thirds, animated transitions, and custom graphics packages for brand consistency.",
           icon: "fa-magic",
-          price: "From $600"
+          price: "From $200"
         }
       ],
       reviews: [
@@ -922,46 +1035,52 @@
     const cursor = document.getElementById('cursor');
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
+    let isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
+    if (!isTouch) {
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
 
-    function animateCursor() {
-      cursorX += (mouseX - cursorX) * 0.1;
-      cursorY += (mouseY - cursorY) * 0.1;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-      requestAnimationFrame(animateCursor);
+      function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      // Hover effects for cursor
+      document.querySelectorAll('a, button, .magnetic-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
     }
-    animateCursor();
-
-    // Hover effects for cursor
-    document.querySelectorAll('a, button, .magnetic-btn').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
 
     // ==================== MAGNETIC BUTTONS ====================
-    document.querySelectorAll('[data-magnetic]').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    if (!isTouch) {
+      document.querySelectorAll('[data-magnetic]').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0, 0)';
+        });
       });
-      
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0, 0)';
-      });
-    });
+    }
 
     // ==================== LOADING SCREEN ====================
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
         initAnimations();
+        animateCounters();
       }, 1500);
     });
 
@@ -971,11 +1090,46 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
+            // Animate skill bars when visible
+            if (entry.target.querySelector('.skill-bar')) {
+              entry.target.querySelectorAll('.skill-bar').forEach(bar => {
+                bar.style.width = bar.style.width;
+              });
+            }
           }
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
       document.querySelectorAll('.reveal, .stagger-children').forEach(el => observer.observe(el));
+    }
+
+    // ==================== COUNTER ANIMATION ====================
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = parseInt(entry.target.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= target) {
+                entry.target.textContent = target + (entry.target.parentElement.textContent.includes('Million') ? '' : '+');
+                clearInterval(timer);
+              } else {
+                entry.target.textContent = Math.floor(current);
+              }
+            }, 16);
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(counter => observer.observe(counter));
     }
 
     // ==================== NAVBAR SCROLL ====================
@@ -1005,12 +1159,24 @@
         menu.classList.remove('translate-x-full');
         line1.style.transform = 'rotate(45deg) translate(5px, 5px)';
         line2.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        document.body.style.overflow = 'hidden';
       } else {
         menu.classList.add('translate-x-full');
         line1.style.transform = 'none';
         line2.style.transform = 'none';
+        document.body.style.overflow = '';
       }
     }
+
+    // Handle mobile nav clicks properly
+    function handleMobileNavClick(e, sectionId) {
+      e.preventDefault();
+      toggleMobileMenu();
+      setTimeout(() => {
+        smoothScroll(sectionId);
+      }, 300);
+    }
+
 
     // ==================== RENDER FUNCTIONS ====================
     function renderPortfolio(filteredProjects = null) {
