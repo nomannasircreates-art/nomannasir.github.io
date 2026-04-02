@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Noman Nasir - Professional Cinematic Video Editor & Documentary Storyteller | 70+ Projects | 4 Years Experience | 25 Million+ Views">
+  <meta name="description" content="Noman Nasir - Professional Cinematic Video Editor & Documentary Storyteller | 150+ Projects | 92% Average Retention">
   <title>Noman Nasir | Cinematic Storytelling Video Editor</title>
-  
+ 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
-  
+ 
   <script>
     tailwind.config = {
       content: ["./**/*.{html,js}"],
@@ -34,10 +34,9 @@
       }
     }
   </script>
-
   <style>
     :root { --scroll-progress: 0%; }
-    
+   
     /* Film Grain */
     .film-grain {
       position: fixed;
@@ -49,29 +48,23 @@
       z-index: 9999;
       animation: grain 8s steps(10) infinite;
     }
-
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #09090b; }
     ::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 4px; }
-
     ::selection { background: #f59e0b; color: #09090b; }
-
     .magnetic-btn {
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .cinematic-ratio { aspect-ratio: 21/9; }
-
     .glass {
-      background: rgba(24, 24, 27, 0.85);
+      background: rgba(24, 24, 27, 0.75);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.08);
     }
-
     .glow-amber { box-shadow: 0 0 40px rgba(245, 158, 11, 0.25); }
-
+    /* Project Card Hover */
     .project-card {
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -79,50 +72,69 @@
       transform: translateY(-8px) scale(1.03);
       box-shadow: 0 25px 50px -12px rgb(245 158 11 / 0.25);
     }
-
+    /* Back to Top */
     #back-to-top {
       animation: fadeInUp 0.4s ease forwards;
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mobile Optimizations */
-    @media (max-width: 640px) {
-      .hero-text { font-size: 2.75rem; line-height: 1.05; }
-      .section-padding { padding-top: 4rem; padding-bottom: 4rem; }
+    /* Optimized Admin Button */
+    .admin-btn {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .admin-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .admin-btn::after {
+      content: "Edit website content live";
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #18181b;
+      color: #f59e0b;
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+    .admin-btn:hover::after {
+      opacity: 1;
+      bottom: -28px;
     }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 overflow-x-hidden cursor-none">
-
-  <!-- Custom Cursor (desktop only) -->
-  <div class="custom-cursor hidden md:block fixed w-5 h-5 border-2 border-amber-500 rounded-full pointer-events-none z-[10000] mix-blend-difference transition-all duration-150" id="cursor"></div>
-
+  <!-- Custom Cursor -->
+  <div class="custom-cursor fixed w-5 h-5 border-2 border-amber-500 rounded-full pointer-events-none z-[10000] mix-blend-difference transition-all duration-150" id="cursor"></div>
   <!-- Film Grain -->
   <div class="film-grain"></div>
-
   <!-- Loading Screen -->
-  <div id="loader" class="fixed inset-0 bg-zinc-950 z-[10001] flex items-center justify-center">
+  <div id="loader" class="loader fixed inset-0 bg-zinc-950 z-[10001] flex items-center justify-center">
     <div class="text-center">
       <div class="text-5xl font-display tracking-[0.5em] text-amber-500 animate-pulse">NOMAN NASIR</div>
       <div class="mt-3 text-xs tracking-[0.25em] text-zinc-500">CINEMATIC • STORYTELLING</div>
     </div>
   </div>
-
   <!-- Navigation -->
   <nav id="navbar" class="glass fixed top-0 left-0 right-0 z-50 border-b border-white/10 transition-all">
-    <div class="max-w-7xl mx-auto px-5 md:px-6 py-5 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group magnetic-btn">
-        <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center text-3xl font-black text-zinc-950 shadow-xl group-active:scale-95">N</div>
+        <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center text-3xl font-black text-zinc-950 shadow-xl group-active:scale-95">N</div>
         <div>
-          <div class="font-display text-xl md:text-2xl font-bold tracking-wider">NOMAN NASIR</div>
+          <div class="font-display text-2xl font-bold tracking-wider">NOMAN NASIR</div>
           <div class="text-[10px] font-medium tracking-[1px] text-amber-500">CINEMATIC EDITOR</div>
         </div>
       </a>
-
       <!-- Desktop Nav -->
       <div class="hidden lg:flex items-center gap-8 text-sm font-medium">
         <a href="#work" onclick="smoothScroll('work')" class="nav-link hover:text-amber-500 transition-colors">WORK</a>
@@ -131,139 +143,123 @@
         <a href="#reviews" onclick="smoothScroll('reviews')" class="nav-link hover:text-amber-500 transition-colors">REVIEWS</a>
         <a href="#contact" onclick="smoothScroll('contact')" class="nav-link hover:text-amber-500 transition-colors">CONTACT</a>
       </div>
-
-      <div class="flex items-center gap-3 md:gap-4">
-        <button onclick="showShowreelModal()" 
-                class="px-6 py-3 md:px-7 md:py-3.5 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-semibold rounded-3xl flex items-center gap-3 transition-all hover:scale-105 magnetic-btn text-sm md:text-base">
+      <div class="flex items-center gap-4">
+        <button onclick="showShowreelModal()"
+                class="px-7 py-3.5 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-semibold rounded-3xl flex items-center gap-3 transition-all hover:scale-105 magnetic-btn">
           <i class="fas fa-play"></i>
-          <span class="hidden sm:inline">SHOWREEL</span>
+          SHOWREEL
         </button>
-
-        <button onclick="showAdminModal()" 
-                class="px-5 py-3 text-xs font-semibold border border-zinc-700 hover:border-amber-500 hover:text-amber-500 rounded-3xl transition-all magnetic-btn">
+        <button onclick="showAdminModal()"
+                class="admin-btn hidden md:block px-6 py-3 text-xs font-semibold border border-zinc-700 hover:border-amber-500 hover:text-amber-500 rounded-3xl transition-all magnetic-btn flex items-center gap-2">
+          <i class="fas fa-cog"></i>
           ADMIN
         </button>
-
         <!-- Mobile Menu Button -->
         <button onclick="toggleMobileMenu()" class="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5">
-          <span id="menu-line-1" class="w-6 h-0.5 bg-white transition-all duration-300"></span>
-          <span id="menu-line-2" class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+          <span id="menu-line-1" class="w-6 h-0.5 bg-white transition-all"></span>
+          <span id="menu-line-2" class="w-6 h-0.5 bg-white transition-all"></span>
         </button>
       </div>
     </div>
-
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-zinc-950/95 backdrop-blur-2xl z-40 flex-col items-center justify-center text-4xl font-display gap-10 pt-20">
-      <a href="#work" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">WORK</a>
-      <a href="#services" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">SERVICES</a>
-      <a href="#about" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">ABOUT</a>
-      <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">REVIEWS</a>
-      <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-amber-500 transition-colors">CONTACT</a>
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-zinc-950/95 backdrop-blur-2xl z-40 flex-col items-center justify-center text-4xl font-display gap-10">
+      <a href="#work" onclick="toggleMobileMenu()" class="hover:text-amber-500">WORK</a>
+      <a href="#services" onclick="toggleMobileMenu()" class="hover:text-amber-500">SERVICES</a>
+      <a href="#about" onclick="toggleMobileMenu()" class="hover:text-amber-500">ABOUT</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-amber-500">REVIEWS</a>
+      <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-amber-500">CONTACT</a>
     </div>
   </nav>
-
   <!-- HERO -->
-  <section id="hero" class="relative min-h-dvh flex items-center justify-center overflow-hidden">
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center scale-110" id="hero-bg" style="background-image: url('https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg');"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/50 to-zinc-950"></div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-6 text-center pt-20">
-      <div class="inline-flex items-center gap-2 px-6 py-3 rounded-3xl border border-amber-500/30 bg-white/5 backdrop-blur-md mb-8 text-sm">
+    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-950/40 to-zinc-950"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center pt-20">
+      <div class="inline-flex items-center gap-2 px-6 py-3 rounded-3xl border border-amber-500/30 bg-white/5 backdrop-blur-md mb-8">
         <div class="w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
-        <span class="font-medium tracking-widest">NOW BOOKING 2026 PROJECTS</span>
+        <span class="text-sm font-medium tracking-widest">NOW BOOKING 2026 PROJECTS</span>
       </div>
-
-      <h1 class="hero-text font-display text-5xl sm:text-6xl md:text-7xl lg:text-[110px] font-bold leading-none tracking-tighter mb-6">
+      <h1 class="font-display text-6xl md:text-8xl lg:text-[110px] font-bold leading-none tracking-tighter mb-6">
         CINEMATIC<br><span class="text-amber-500 glow-amber">STORYTELLING</span>
       </h1>
-
-      <p class="max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl text-zinc-300 mb-12 px-4">
-        Documentary-style editing that transforms raw footage into emotionally charged, retention-first stories.<br>
-        <span class="text-amber-500 font-semibold">4 years crafting visuals that captivate millions.</span>
+      <p class="max-w-2xl mx-auto text-xl md:text-2xl text-zinc-300 mb-12">
+        Documentary-style editing that turns raw footage into emotionally charged stories.<br>
+        <span class="text-amber-500 font-semibold">92% average viewer retention.</span>
       </p>
-
-      <div class="flex flex-wrap justify-center gap-4 px-4">
-        <button onclick="showShowreelModal()" 
-                class="px-8 py-5 bg-white text-zinc-950 rounded-3xl font-semibold flex items-center gap-3 text-lg hover:scale-105 transition-all magnetic-btn">
+      <div class="flex flex-wrap justify-center gap-4">
+        <button onclick="showShowreelModal()"
+                class="px-10 py-5 bg-white text-zinc-950 rounded-3xl font-semibold flex items-center gap-3 text-lg hover:scale-105 transition-all magnetic-btn">
           <i class="fas fa-play"></i> WATCH SHOWREEL
         </button>
-        <button onclick="smoothScroll('work')" 
-                class="px-8 py-5 border-2 border-white/60 hover:border-white rounded-3xl font-medium text-lg transition-all magnetic-btn">
-          EXPLORE PROJECTS
+        <button onclick="smoothScroll('work')"
+                class="px-10 py-5 border-2 border-white/60 hover:border-white rounded-3xl font-medium text-lg transition-all magnetic-btn">
+          SEE ALL PROJECTS
         </button>
       </div>
-
-      <!-- Stats - richer on desktop -->
-      <div class="mt-20 md:mt-24 grid grid-cols-3 max-w-md md:max-w-2xl mx-auto text-center gap-8 md:gap-12">
+      <!-- Stats -->
+      <div class="mt-24 grid grid-cols-3 max-w-md mx-auto text-center">
         <div>
-          <div class="text-4xl md:text-5xl font-display font-bold text-amber-500">70+</div>
-          <div class="text-xs md:text-sm uppercase tracking-widest text-zinc-400 mt-2">Projects Edited</div>
+          <div class="text-4xl font-display font-bold text-amber-500">150+</div>
+          <div class="text-xs uppercase tracking-widest text-zinc-400 mt-1">Projects Edited</div>
         </div>
         <div class="border-x border-white/10">
-          <div class="text-4xl md:text-5xl font-display font-bold">92%</div>
-          <div class="text-xs md:text-sm uppercase tracking-widest text-zinc-400 mt-2">Avg. Retention</div>
+          <div class="text-4xl font-display font-bold">92%</div>
+          <div class="text-xs uppercase tracking-widest text-zinc-400 mt-1">Avg. Retention</div>
         </div>
         <div>
-          <div class="text-4xl md:text-5xl font-display font-bold">25M+</div>
-          <div class="text-xs md:text-sm uppercase tracking-widest text-zinc-400 mt-2">Total Views</div>
+          <div class="text-4xl font-display font-bold">50M+</div>
+          <div class="text-xs uppercase tracking-widest text-zinc-400 mt-1">Total Views</div>
         </div>
       </div>
     </div>
-
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs tracking-[2px] text-zinc-500">
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs tracking-[2px] text-zinc-500">
       SCROLL FOR MAGIC
       <div class="w-px h-12 bg-gradient-to-b from-transparent via-amber-500 to-transparent"></div>
     </div>
   </section>
-
   <!-- PORTFOLIO / WORK -->
-  <section id="work" class="section-padding py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-5 md:px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+  <section id="work" class="py-28">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-end mb-12">
         <div>
           <span class="text-amber-500 text-sm font-semibold tracking-[1px]">SELECTED WORK</span>
-          <h2 class="text-4xl md:text-6xl font-display font-bold">Featured Projects</h2>
+          <h2 class="text-5xl md:text-6xl font-display font-bold">Featured Projects</h2>
         </div>
         <div id="category-filters" class="flex flex-wrap gap-3"></div>
       </div>
-
-      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"></div>
+      <div id="portfolio-grid" class="grid md:grid-cols-2 gap-8"></div>
     </div>
   </section>
-
   <!-- SERVICES -->
-  <section id="services" class="section-padding py-20 md:py-28 bg-zinc-900/50">
-    <div class="max-w-7xl mx-auto px-5 md:px-6">
+  <section id="services" class="py-28 bg-zinc-900/50">
+    <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
         <span class="text-amber-500 text-sm font-semibold tracking-[1px]">WHAT I OFFER</span>
-        <h2 class="text-4xl md:text-6xl font-display font-bold">Premium Cinematic Services</h2>
+        <h2 class="text-5xl md:text-6xl font-display font-bold">Premium Editing Services</h2>
       </div>
-      <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"></div>
+      <div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </div>
   </section>
-
   <!-- ABOUT -->
-  <section id="about" class="section-padding py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-5 md:px-6">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+  <section id="about" class="py-28">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-12 gap-16 items-center">
         <div class="lg:col-span-5">
-          <div class="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl bg-zinc-900">
-            <img id="about-image" 
+          <div class="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
+            <img id="about-image"
                  src="https://drive.google.com/uc?export=view&id=1Z7HZqjJes94ItkKcDR_V6RQZx-yTIPbN"
                  alt="Noman Nasir - Cinematic Video Editor"
                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>
         </div>
-
         <div class="lg:col-span-7">
           <span class="text-amber-500 text-sm font-semibold tracking-[1px]">MY STORY</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold leading-none mt-4 mb-8">Crafting visual narratives that resonate</h2>
-          
-          <div id="about-content" class="prose prose-invert text-base md:text-lg text-zinc-300 leading-relaxed"></div>
-
+          <h2 class="text-5xl font-display font-bold leading-none mt-3 mb-8">Crafting visual<br>narratives that matter</h2>
+         
+          <div id="about-content" class="prose prose-invert text-lg text-zinc-300"></div>
           <!-- Skills -->
-          <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div class="mt-16 grid grid-cols-2 gap-8">
             <div>
               <div class="flex justify-between text-sm mb-3"><span>Adobe Premiere Pro</span><span class="text-amber-500 font-medium">98%</span></div>
               <div class="h-2 bg-zinc-800 rounded-full"><div class="h-2 w-[98%] bg-amber-500 rounded-full"></div></div>
@@ -285,54 +281,50 @@
       </div>
     </div>
   </section>
-
   <!-- REVIEWS -->
-  <section id="reviews" class="section-padding py-20 md:py-28 bg-zinc-900/30">
-    <div class="max-w-7xl mx-auto px-5 md:px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+  <section id="reviews" class="py-28 bg-zinc-900/30">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-end mb-12">
         <div>
           <span class="text-amber-500 text-sm font-semibold tracking-[1px]">CLIENT LOVE</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold">What clients say</h2>
+          <h2 class="text-5xl font-display font-bold">What clients say</h2>
         </div>
         <button onclick="showReviewSubmitModal()" class="px-8 py-4 border border-zinc-700 hover:border-amber-500 rounded-3xl text-sm font-medium">Write a Review</button>
       </div>
-      <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"></div>
+      <div id="reviews-grid" class="grid md:grid-cols-3 gap-8"></div>
     </div>
   </section>
-
   <!-- CONTACT -->
-  <section id="contact" class="section-padding py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-5 md:px-6">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+  <section id="contact" class="py-28">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-20">
         <div>
           <span class="text-amber-500 text-sm font-semibold tracking-[1px]">LET'S COLLABORATE</span>
-          <h2 class="text-5xl md:text-6xl font-display font-bold leading-none mt-6">Ready to create something legendary?</h2>
-          <p class="text-lg md:text-xl text-zinc-400 mt-8">I partner with YouTubers, documentary filmmakers, brands, and visionary creators seeking cinematic excellence and high retention.</p>
-
+          <h2 class="text-6xl font-display font-bold leading-none mt-4">Ready to create<br>something legendary?</h2>
+          <p class="text-xl text-zinc-400 mt-8">I work with YouTubers, documentary producers, brands, and creators who want cinematic excellence.</p>
           <div class="mt-12 space-y-6">
-            <a href="mailto:nomannasircreates@gmail.com" class="block p-6 rounded-3xl bg-zinc-900 border border-zinc-700 hover:border-amber-500 flex gap-6 items-center group">
-              <i class="fas fa-envelope text-4xl text-amber-500 group-hover:scale-110 transition-transform"></i>
+            <a href="mailto:nomannasircreates@gmail.com" class="block p-6 rounded-3xl bg-zinc-900 border border-zinc-700 hover:border-amber-500 flex gap-6 items-center">
+              <i class="fas fa-envelope text-3xl text-amber-500"></i>
               <div>
                 <div class="text-sm text-zinc-400">Email me directly</div>
-                <div class="font-medium text-lg">nomannasircreates@gmail.com</div>
+                <div class="font-medium">nomannasircreates@gmail.com</div>
               </div>
             </a>
-            <a href="https://wa.me/923278330045" target="_blank" class="block p-6 rounded-3xl bg-zinc-900 border border-zinc-700 hover:border-green-500 flex gap-6 items-center group">
-              <i class="fab fa-whatsapp text-4xl text-green-500 group-hover:scale-110 transition-transform"></i>
+            <a href="https://wa.me/923278330045" target="_blank" class="block p-6 rounded-3xl bg-zinc-900 border border-zinc-700 hover:border-green-500 flex gap-6 items-center">
+              <i class="fab fa-whatsapp text-3xl text-green-500"></i>
               <div>
                 <div class="text-sm text-zinc-400">Message on WhatsApp</div>
-                <div class="font-medium text-lg">+92 327 8330045</div>
+                <div class="font-medium">+92 327 8330045</div>
               </div>
             </a>
           </div>
         </div>
-
         <!-- Contact Form -->
-        <form action="https://formspree.io/f/YOUR_ID" method="POST" class="bg-zinc-900/50 border border-zinc-700 p-8 md:p-10 rounded-3xl">
+        <form action="https://formspree.io/f/YOUR_ID" method="POST" class="bg-zinc-900/50 border border-zinc-700 p-8 rounded-3xl">
           <div class="space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <input type="text" name="name" placeholder="Your name" required class="bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none transition-all">
-              <input type="email" name="email" placeholder="Your email" required class="bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none transition-all">
+            <div class="grid grid-cols-2 gap-6">
+              <input type="text" name="name" placeholder="Your name" required class="bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none">
+              <input type="email" name="email" placeholder="Your email" required class="bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none">
             </div>
             <select name="project_type" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none">
               <option value="">Project Type</option>
@@ -341,104 +333,92 @@
               <option value="Commercial">Commercial / Brand</option>
               <option value="Social">Short-form Content</option>
             </select>
-            <textarea name="message" rows="6" placeholder="Tell me about your project, vision, and timeline..." required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none resize-none"></textarea>
-            
+            <textarea name="message" rows="6" placeholder="Tell me about your project..." required class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500 px-6 py-4 rounded-2xl outline-none resize-none"></textarea>
+           
             <button type="submit" class="w-full py-6 bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold text-xl rounded-3xl transition-all">SEND MESSAGE</button>
           </div>
         </form>
       </div>
     </div>
   </section>
-
   <!-- FOOTER -->
   <footer class="bg-black py-16 border-t border-zinc-800">
-    <div class="max-w-7xl mx-auto px-5 md:px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center text-3xl font-black text-zinc-950">N</div>
         <div class="font-display text-2xl">NOMAN NASIR</div>
       </div>
-      <div class="text-zinc-500 text-sm text-center md:text-left">
+      <div class="text-zinc-500 text-sm">
         © <span id="current-year"></span> Noman Nasir • Peshawar, Pakistan • All Rights Reserved
       </div>
       <div class="flex gap-6 text-2xl">
-        <a href="#" class="hover:text-amber-500 transition-colors"><i class="fab fa-youtube"></i></a>
-        <a href="#" class="hover:text-amber-500 transition-colors"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="hover:text-amber-500 transition-colors"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="hover:text-amber-500"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="hover:text-amber-500"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-amber-500"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
   </footer>
-
   <!-- BACK TO TOP -->
   <button onclick="window.scrollTo({top:0, behavior:'smooth'})" id="back-to-top"
-          class="hidden fixed bottom-8 right-8 bg-amber-500 text-zinc-950 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-2xl hover:scale-110 z-50">
+          class="hidden fixed bottom-8 right-8 bg-amber-500 text-zinc-950 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-2xl hover:scale-110">
     <i class="fas fa-arrow-up"></i>
   </button>
-
   <!-- MODALS -->
   <!-- Showreel Modal -->
-  <div id="showreel-modal" onclick="if(event.target.id==='showreel-modal')hideShowreelModal()" 
+  <div id="showreel-modal" onclick="if(event.target.id==='showreel-modal')hideShowreelModal()"
        class="hidden fixed inset-0 bg-black/95 z-[9999] items-center justify-center p-4">
     <div class="w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden relative">
       <button onclick="hideShowreelModal()" class="absolute top-6 right-6 z-10 bg-zinc-900 text-white w-12 h-12 rounded-2xl flex items-center justify-center text-3xl hover:bg-red-600">×</button>
-      <iframe id="showreel-iframe" width="100%" height="100%" frameborder="0" 
+      <iframe id="showreel-iframe" width="100%" height="100%" frameborder="0"
+              src="https://www.youtube.com/embed/VuIVZVgMbr4"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
-
   <!-- Project Modal -->
-  <div id="project-modal" onclick="if(event.target.id==='project-modal')hideProjectModal()" 
+  <div id="project-modal" onclick="if(event.target.id==='project-modal')hideProjectModal()"
        class="hidden fixed inset-0 bg-black/95 z-[9999] items-center justify-center p-4 overflow-auto">
     <div id="modal-content" class="w-full max-w-5xl bg-zinc-900 rounded-3xl overflow-hidden"></div>
   </div>
-
-  <!-- Review Submit Modal -->
-  <div id="review-submit-modal" onclick="if(event.target.id==='review-submit-modal')hideReviewSubmitModal()" 
+  <!-- Review Modal -->
+  <div id="review-submit-modal" onclick="if(event.target.id==='review-submit-modal')hideReviewSubmitModal()"
        class="hidden fixed inset-0 bg-black/95 z-[9999] items-center justify-center p-4">
     <div class="bg-zinc-900 w-full max-w-lg rounded-3xl p-8">
-      <h3 class="text-3xl font-display mb-6">Share Your Experience</h3>
+      <h3 class="text-3xl font-display mb-2">Share your experience</h3>
       <form id="review-form" onsubmit="submitReview(event)" class="space-y-6">
         <div class="grid grid-cols-2 gap-4">
           <input id="review-name" type="text" placeholder="Your name" required class="bg-zinc-800 px-5 py-4 rounded-2xl">
-          <input id="review-role" type="text" placeholder="Role / Channel" class="bg-zinc-800 px-5 py-4 rounded-2xl">
+          <input id="review-role" type="text" placeholder="Your role / channel" class="bg-zinc-800 px-5 py-4 rounded-2xl">
         </div>
-        <textarea id="review-text" rows="5" placeholder="Tell us about working with me..." required class="w-full bg-zinc-800 px-5 py-4 rounded-2xl"></textarea>
+        <textarea id="review-text" rows="5" placeholder="How was working with me?" required class="w-full bg-zinc-800 px-5 py-4 rounded-2xl"></textarea>
+       
         <button type="submit" class="w-full py-6 bg-amber-500 text-zinc-950 font-bold text-xl rounded-3xl">SUBMIT REVIEW</button>
       </form>
     </div>
   </div>
-
-  <!-- ADMIN MODAL - Fully Functional -->
+  <!-- Admin Modal -->
   <div id="admin-modal" class="hidden fixed inset-0 bg-black/95 z-[10000] items-center justify-center p-4">
     <div class="bg-zinc-900 w-full max-w-7xl rounded-3xl overflow-hidden max-h-[95vh] flex flex-col">
-      <div class="p-6 border-b flex justify-between items-center">
-        <h2 class="text-3xl font-display">Admin Dashboard - Live Editing</h2>
+      <div class="p-8 border-b flex justify-between items-center">
+        <h2 class="text-3xl font-display">Admin Dashboard</h2>
         <button onclick="hideAdminModal()" class="text-4xl text-zinc-400 hover:text-white">×</button>
       </div>
-      <div id="admin-content" class="flex-1 p-8 overflow-auto space-y-12">
-        <!-- Dynamic admin form populated by JS -->
-      </div>
-      <div class="p-6 border-t flex justify-end gap-4">
-        <button onclick="hideAdminModal()" class="px-8 py-3 border border-zinc-700 rounded-3xl">Close</button>
-        <button onclick="saveSiteData(); hideAdminModal(); alert('Changes saved successfully! Refresh to see updates.')" 
-                class="px-8 py-3 bg-amber-500 text-zinc-950 rounded-3xl font-semibold">Save All Changes</button>
-      </div>
+      <div id="admin-content" class="flex-1 p-8 overflow-auto"></div>
     </div>
   </div>
 
   <script>
-    // ==================== SITE DATA (Updated Stats) ====================
+    // ==================== DATA (UPDATED & FIXED) ====================
     let siteData = {
       heroBg: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
       aboutImage: "https://drive.google.com/uc?export=view&id=1Z7HZqjJes94ItkKcDR_V6RQZx-yTIPbN",
-      aboutText: `<p class="mb-8">With 4 years of dedicated experience transforming raw footage into emotionally powerful documentaries and YouTube successes, I specialize in retention-first cinematic editing. My work blends masterful pacing, strategic hooks, and emotional storytelling to help creators achieve millions of views.</p>
-                  <p class="text-amber-400">Every cut, transition, and frame is meticulously designed to captivate audiences from the first second.</p>`,
-
+      aboutText: `<p class="mb-8">With 8+ years turning raw footage into emotionally powerful documentaries and YouTube hits, I specialize in retention-first editing. My work has helped creators cross millions of views by combining cinematic pacing with modern storytelling techniques.</p>
+                  <p class="text-amber-400">Every cut. Every transition. Every frame — designed to keep viewers watching.</p>`,
       projects: [
         {
           id: 1,
           title: "Islamic Economic System",
           category: "Documentary",
-          desc: "16-minute cinematic documentary with masterful pacing, emotional B-roll, and 94% viewer retention. A deep dive into complex concepts made accessible and engaging.",
+          desc: "16-minute documentary explaining how the Islamic economic system works with masterful pacing and emotional B-roll. Achieved 94% viewer retention.",
           videoEmbed: "https://www.youtube.com/embed/0Bg3K6zmT1o",
           thumbnail: "https://img.youtube.com/vi/0Bg3K6zmT1o/maxresdefault.jpg",
           client: "Personal Project",
@@ -449,80 +429,52 @@
           id: 2,
           title: "The African Revolution",
           category: "Educational",
-          desc: "Powerful documentary exploring historical movements. Strategic editing hooks every 8-12 seconds resulted in a 41% increase in average view duration.",
+          desc: "Comprehensive documentary about the African revolution. Strategic hooks every 8-12 seconds led to 41% increase in average view duration.",
           videoEmbed: "https://www.youtube.com/embed/xrMEcjoaNtw",
           thumbnail: "https://img.youtube.com/vi/xrMEcjoaNtw/maxresdefault.jpg",
           client: "Personal Project",
           year: "2025",
           duration: "5:00"
         }
-        // Add more projects here if desired
       ],
-
       services: [
-        { title: "Documentary Editing", desc: "Complete narrative arc development, interview polishing, archival integration, and emotional pacing for compelling long-form stories.", icon: "fa-film", price: "From $350" },
-        { title: "3D Animation & Motion", desc: "High-end 3D motion graphics, cinematic animations, explainer videos, and immersive visual effects.", icon: "fa-cube", price: "From $450" },
-        { title: "YouTube Optimization", desc: "Retention-optimized editing with precise hooks, chapter markers, end screens, and algorithmic storytelling.", icon: "fa-youtube", price: "From $250" },
-        { title: "Motion Graphics & Branding", desc: "Kinetic typography, custom lower thirds, animated transitions, and full branding packages.", icon: "fa-magic", price: "From $120" }
+        { title: "Documentary Editing", desc: "Full narrative development, interviews, archival footage & emotional pacing for long-form content.", icon: "fa-film", price: "From $350" },
+        { title: "3D Animation", desc: "High-quality 3D motion graphics, explainer videos and cinematic animations.", icon: "fa-cube", price: "From $450" },
+        { title: "YouTube Optimization", desc: "Retention-first editing with strategic hooks, chapters and end-screen design.", icon: "fa-youtube", price: "From $250" },
+        { title: "Motion Graphics", desc: "Kinetic typography, lower thirds, animated transitions & custom branding packages.", icon: "fa-magic", price: "From $120" }
       ],
-
       reviews: [
-        { id: 1, name: "Ahmed Farooq", role: "Tech YouTuber • 2M subs", text: "Noman transformed my raw 4-hour footage into a polished 22-minute viral hit. Over 2.3M views in the first month alone.", rating: 5, date: "Feb 2026" },
-        { id: 2, name: "Sarah Chen", role: "Documentary Producer", text: "His intuitive storytelling and cinematic eye exceeded every expectation. Delivered far beyond the brief.", rating: 5, date: "Jan 2026" }
+        { id: 1, name: "Ahmed Farooq", role: "Tech YouTuber • 2M subs", text: "Noman turned my messy 4-hour footage into a viral 22-minute masterpiece. 2.3M views in first month.", rating: 5, date: "Feb 2026" },
+        { id: 2, name: "Sarah Chen", role: "Documentary Producer", text: "His storytelling intuition is next level. Delivered exactly what we needed — and more.", rating: 5, date: "Jan 2026" }
       ]
     };
 
-    // Load saved data
+    // Load from localStorage if exists
     if (localStorage.getItem('nomanSiteData')) {
       siteData = JSON.parse(localStorage.getItem('nomanSiteData'));
     }
 
     function saveSiteData() {
       localStorage.setItem('nomanSiteData', JSON.stringify(siteData));
-      renderAll();
     }
 
-    // ==================== CURSOR & UTILITIES ====================
+    // ==================== CURSOR + BASIC ANIMATIONS ====================
     const cursor = document.getElementById('cursor');
-    if (cursor) {
-      document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-      document.querySelectorAll('a, button, .magnetic-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2.5)');
-        el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
-      });
-    }
-
-    function smoothScroll(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      const line1 = document.getElementById('menu-line-1');
-      const line2 = document.getElementById('menu-line-2');
-      menu.classList.toggle('hidden');
-      menu.classList.toggle('flex');
-      
-      // Hamburger animation
-      if (!menu.classList.contains('hidden')) {
-        line1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-        line2.style.transform = 'rotate(-45deg) translate(5px, -5px)';
-      } else {
-        line1.style.transform = 'none';
-        line2.style.transform = 'none';
-      }
-    }
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .magnetic-btn').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2)');
+      el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+    });
 
     // ==================== RENDER FUNCTIONS ====================
     function renderPortfolio(filtered = null) {
       const container = document.getElementById('portfolio-grid');
       container.innerHTML = '';
-      const projectsToShow = filtered || siteData.projects;
-
-      projectsToShow.forEach(project => {
+      const projects = filtered || siteData.projects;
+      projects.forEach(project => {
         const cardHTML = `
           <div onclick="showProjectModal(${project.id})" class="project-card group bg-zinc-900 rounded-3xl overflow-hidden cursor-pointer">
             <div class="relative">
@@ -535,7 +487,7 @@
               <div class="absolute top-4 right-4 bg-black/70 text-xs px-3 py-1 rounded-2xl">${project.duration}</div>
             </div>
             <div class="p-6">
-              <div class="flex justify-between text-xs mb-3">
+              <div class="flex justify-between text-xs mb-2">
                 <span class="text-amber-500">${project.category}</span>
                 <span class="text-zinc-400">${project.year}</span>
               </div>
@@ -551,17 +503,14 @@
       const container = document.getElementById('category-filters');
       const cats = ['All', ...new Set(siteData.projects.map(p => p.category))];
       container.innerHTML = cats.map(cat => `
-        <button onclick="filterByCategory('${cat}')" 
-                class="px-5 py-2.5 text-sm font-medium rounded-3xl transition-all ${cat === 'All' ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 hover:bg-zinc-700'}">
+        <button onclick="filterByCategory('${cat}')"
+                class="px-6 py-3 text-sm font-medium rounded-3xl transition-all ${cat === 'All' ? 'bg-amber-500 text-zinc-950' : 'bg-zinc-800 hover:bg-zinc-700'}">
           ${cat}
         </button>`).join('');
     }
 
     window.filterByCategory = function(cat) {
-      document.querySelectorAll('#category-filters button').forEach(b => {
-        b.classList.toggle('bg-amber-500', b.textContent.trim() === cat);
-        b.classList.toggle('text-zinc-950', b.textContent.trim() === cat);
-      });
+      document.querySelectorAll('#category-filters button').forEach(b => b.classList.remove('bg-amber-500', 'text-zinc-950'));
       if (cat === 'All') renderPortfolio();
       else renderPortfolio(siteData.projects.filter(p => p.category === cat));
     };
@@ -590,7 +539,7 @@
             <div class="w-10 h-10 bg-amber-500 text-zinc-950 rounded-2xl flex items-center justify-center font-bold">${r.name[0]}</div>
             <div>
               <div class="font-semibold">${r.name}</div>
-              <div class="text-xs text-zinc-400">${r.role} • ${r.date}</div>
+              <div class="text-xs text-zinc-400">${r.role}</div>
             </div>
           </div>
         </div>`).join('');
@@ -601,14 +550,6 @@
       document.getElementById('about-content').innerHTML = siteData.aboutText;
     }
 
-    function renderAll() {
-      renderPortfolio();
-      renderCategoryFilters();
-      renderServices();
-      renderReviews();
-      renderAbout();
-    }
-
     // ==================== MODALS ====================
     window.showProjectModal = function(id) {
       const project = siteData.projects.find(p => p.id === id);
@@ -616,28 +557,32 @@
       const modalContent = document.getElementById('modal-content');
       modalContent.innerHTML = `
         <div class="aspect-video bg-black relative">
-          <iframe width="100%" height="100%" src="${project.videoEmbed}" frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src="${project.videoEmbed}"
+                  frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
         </div>
-        <div class="p-8 md:p-10">
+        <div class="p-10">
           <div class="flex justify-between items-start">
             <div>
               <span class="px-4 py-1 bg-amber-500/10 text-amber-500 text-sm rounded-3xl">${project.category}</span>
               <h2 class="text-4xl font-display mt-4">${project.title}</h2>
             </div>
-            <a href="https://www.youtube.com/watch?v=${project.videoEmbed.split('/').pop()}" target="_blank" class="flex items-center gap-2 text-sm bg-white/10 hover:bg-white/20 px-5 py-3 rounded-3xl">
+            <a href="https://www.youtube.com/watch?v=${project.videoEmbed.split('/').pop()}" target="_blank"
+               class="flex items-center gap-2 text-sm bg-white/10 hover:bg-white/20 px-5 py-3 rounded-3xl">
               <i class="fab fa-youtube"></i> Watch on YouTube
             </a>
           </div>
           <p class="mt-8 text-zinc-300">${project.desc}</p>
-          <div class="grid grid-cols-3 mt-12 text-sm gap-6">
-            <div><span class="text-zinc-400 block">Duration</span><span class="font-semibold">${project.duration}</span></div>
-            <div><span class="text-zinc-400 block">Client</span><span class="font-semibold">${project.client}</span></div>
-            <div><span class="text-zinc-400 block">Year</span><span class="font-semibold">${project.year}</span></div>
+          <div class="grid grid-cols-3 mt-12 text-sm">
+            <div><span class="text-zinc-400">Duration</span><br><span class="font-semibold">${project.duration}</span></div>
+            <div><span class="text-zinc-400">Client</span><br><span class="font-semibold">${project.client}</span></div>
+            <div><span class="text-zinc-400">Year</span><br><span class="font-semibold">${project.year}</span></div>
           </div>
         </div>
       `;
-      document.getElementById('project-modal').classList.remove('hidden');
-      document.getElementById('project-modal').classList.add('flex');
+      const modal = document.getElementById('project-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     };
 
     window.hideProjectModal = function() {
@@ -648,16 +593,12 @@
 
     window.showShowreelModal = function() {
       const modal = document.getElementById('showreel-modal');
-      const iframe = document.getElementById('showreel-iframe');
-     iframe.src = "https://www.youtube.com/embed/VuIVZVgMbr4";
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     };
 
     window.hideShowreelModal = function() {
       const modal = document.getElementById('showreel-modal');
-      const iframe = document.getElementById('showreel-iframe');
-      iframe.src = '';
       modal.classList.add('hidden');
       modal.classList.remove('flex');
     };
@@ -678,56 +619,18 @@
       siteData.reviews.unshift({
         id: Date.now(),
         name: name,
-        role: document.getElementById('review-role').value || "Client",
+        role: "Client",
         text: document.getElementById('review-text').value,
         rating: 5,
         date: "Just now"
       });
       saveSiteData();
+      renderReviews();
       hideReviewSubmitModal();
-      alert("Thank you! Your review has been added.");
+      alert("Thank you! Your review has been submitted.");
     };
 
-    // ==================== ADMIN DASHBOARD ====================
     function showAdminModal() {
-      const content = document.getElementById('admin-content');
-      content.innerHTML = `
-        <div class="space-y-10">
-          <!-- About Section -->
-          <div>
-            <h3 class="text-xl font-semibold mb-4">About Section</h3>
-            <div class="space-y-4">
-              <div>
-                <label class="block text-sm text-zinc-400 mb-1">About Text (HTML supported)</label>
-                <textarea id="admin-about-text" class="w-full h-48 bg-zinc-800 border border-zinc-700 rounded-2xl p-4 text-sm">${siteData.aboutText}</textarea>
-              </div>
-              <div>
-                <label class="block text-sm text-zinc-400 mb-1">About Image URL</label>
-                <input id="admin-about-image" type="text" value="${siteData.aboutImage}" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm">
-              </div>
-            </div>
-          </div>
-
-          <!-- Projects -->
-          <div>
-            <h3 class="text-xl font-semibold mb-4">Projects (${siteData.projects.length})</h3>
-            <div id="admin-projects-list" class="space-y-6"></div>
-            <button onclick="addNewProject()" class="mt-4 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-3xl text-sm">+ Add New Project</button>
-          </div>
-
-          <!-- Services -->
-          <div>
-            <h3 class="text-xl font-semibold mb-4">Services</h3>
-            <div id="admin-services-list" class="space-y-6"></div>
-          </div>
-
-          <button onclick="saveAdminChanges()" class="w-full py-4 bg-amber-500 text-zinc-950 rounded-3xl font-semibold">Save All Changes to localStorage</button>
-        </div>
-      `;
-
-      renderAdminProjects();
-      renderAdminServices();
-
       document.getElementById('admin-modal').classList.remove('hidden');
       document.getElementById('admin-modal').classList.add('flex');
     }
@@ -737,93 +640,31 @@
       document.getElementById('admin-modal').classList.remove('flex');
     }
 
-    function renderAdminProjects() {
-      const container = document.getElementById('admin-projects-list');
-      container.innerHTML = siteData.projects.map((p, index) => `
-        <div class="border border-zinc-700 rounded-3xl p-6">
-          <input id="proj-title-${index}" value="${p.title}" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 mb-3 text-sm" placeholder="Title">
-          <textarea id="proj-desc-${index}" class="w-full h-24 bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm">${p.desc}</textarea>
-          <div class="grid grid-cols-2 gap-4 mt-4">
-            <input id="proj-cat-${index}" value="${p.category}" class="bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm" placeholder="Category">
-            <input id="proj-year-${index}" value="${p.year}" class="bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm" placeholder="Year">
-          </div>
-          <button onclick="deleteProject(${index})" class="mt-4 text-red-400 text-sm hover:text-red-500">Delete Project</button>
-        </div>
-      `).join('');
+    function smoothScroll(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    function renderAdminServices() {
-      const container = document.getElementById('admin-services-list');
-      container.innerHTML = siteData.services.map((s, index) => `
-        <div class="border border-zinc-700 rounded-3xl p-6">
-          <input id="serv-title-${index}" value="${s.title}" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 mb-3 text-sm" placeholder="Service Title">
-          <textarea id="serv-desc-${index}" class="w-full h-20 bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm">${s.desc}</textarea>
-        </div>
-      `).join('');
-    }
-
-    window.addNewProject = function() {
-      siteData.projects.push({
-        id: Date.now(),
-        title: "New Project Title",
-        category: "Documentary",
-        desc: "Project description here...",
-        videoEmbed: "https://www.youtube.com/embed/example",
-        thumbnail: "https://img.youtube.com/vi/example/maxresdefault.jpg",
-        client: "Client Name",
-        year: "2026",
-        duration: "10:00"
-      });
-      renderAdminProjects();
-    };
-
-    window.deleteProject = function(index) {
-      if (confirm("Delete this project?")) {
-        siteData.projects.splice(index, 1);
-        renderAdminProjects();
-      }
-    };
-
-    function saveAdminChanges() {
-      // Save About
-      siteData.aboutText = document.getElementById('admin-about-text').value;
-      siteData.aboutImage = document.getElementById('admin-about-image').value;
-
-      // Save Projects
-      siteData.projects.forEach((p, index) => {
-        p.title = document.getElementById(`proj-title-${index}`).value;
-        p.desc = document.getElementById(`proj-desc-${index}`).value;
-        p.category = document.getElementById(`proj-cat-${index}`).value;
-        p.year = document.getElementById(`proj-year-${index}`).value;
-      });
-
-      // Save Services
-      siteData.services.forEach((s, index) => {
-        s.title = document.getElementById(`serv-title-${index}`).value;
-        s.desc = document.getElementById(`serv-desc-${index}`).value;
-      });
-
-      saveSiteData();
-      alert("All changes saved! The site has been updated live.");
-    }
-
-    // ==================== INITIALIZE ====================
     function initializeSite() {
-      renderAll();
-
+      renderPortfolio();
+      renderCategoryFilters();
+      renderServices();
+      renderReviews();
+      renderAbout();
       document.getElementById('current-year').textContent = new Date().getFullYear();
 
       // Loader
       setTimeout(() => {
-        const loader = document.getElementById('loader');
-        loader.style.transition = 'opacity 0.8s';
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 800);
-      }, 1000);
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => document.getElementById('loader').remove(), 800);
+      }, 1200);
 
       // Back to top
       window.addEventListener('scroll', () => {
-        document.getElementById('back-to-top').classList.toggle('hidden', window.scrollY < 800);
+        if (window.scrollY > 800) {
+          document.getElementById('back-to-top').classList.remove('hidden');
+        } else {
+          document.getElementById('back-to-top').classList.add('hidden');
+        }
       });
     }
 
